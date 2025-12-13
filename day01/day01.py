@@ -1,29 +1,27 @@
 from pathlib import Path
 from typing import override
+from utils import Solution
 
 
-INPUT_FILE = Path(__file__).parent / "input"
-
-
-class SolutionDay01:
-    start_num: int = 50
-
-    def __init__(self, input_file: Path = INPUT_FILE) -> None:
-        self.input_file: Path = input_file
-        with open(self.input_file, "r") as fp:
-            input_lines = fp.readlines()
-        self.lines: list[str] = [l.strip() for l in input_lines if l != ""]
+class Day01(Solution):
+    def __init__(self) -> None:
+        super().__init__(Path(__file__).parent / "input", 1)
+        self.start_num: int = 50
 
     @override
-    def __str__(self) -> str:
-        return f"AOC 2025 solutions for day 01"
+    def get_input(self) -> list[str]:
+        with open(self.input_file, "r") as fp:
+            lines = fp.readlines()
+        return lines
 
     @property
+    @override
     def part_one(self) -> int:
+        lines = self.get_input()
         zero_count: int = 0
         cur_num: int = self.start_num
 
-        for line in self.lines:
+        for line in lines:
             rotation = int(line.replace("L", "-").replace("R", ""))
             cur_num = (cur_num + rotation) % 100
             if cur_num == 0:
@@ -32,9 +30,5 @@ class SolutionDay01:
         return zero_count
 
     @property
+    @override
     def part_two(self): ...
-
-
-if __name__ == "__main__":
-    solution = SolutionDay01()
-    print(solution)
