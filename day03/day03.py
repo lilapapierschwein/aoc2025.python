@@ -38,8 +38,21 @@ class Day03(Solution):
 
     @property
     @override
-    def part_two(self) -> object:
-        return super().part_two
+    def part_two(self) -> int:
+        total_jolts: int = 0
+        banks: list[list[int]] = []
+        for line in self.get_input():
+            banks.append([int(b) for b in line])
+        for bank in banks:
+            jolts = 0
+            for i in range(11):
+                digit = max(bank[: i - 11])
+                bank = bank[bank.index(digit) + 1 :]
+                jolts = (jolts * 10) + digit
+            jolts = (jolts * 10) + max(bank)
+            total_jolts += jolts
+
+        return total_jolts
 
 
 if __name__ == "__main__":
